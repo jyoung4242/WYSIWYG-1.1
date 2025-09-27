@@ -9,9 +9,11 @@ let mainWindow: BrowserWindow | null = null;
 let splash: BrowserWindow | null = null;
 
 async function createWindow() {
+  const iconPath = path.join(process.cwd(), "public", "graphics", "ex-logo.png");
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
+    icon: iconPath, // ✅ window + taskbar icon
     webPreferences: {
       preload: path.join(__dirname, "preload.js"), // compiled JS path
     },
@@ -28,11 +30,14 @@ async function createWindow() {
 }
 
 async function createSplash() {
+  const iconPath = path.join(process.cwd(), "public", "graphics", "ex-logo.png");
   splash = new BrowserWindow({
     width: 600,
     height: 400,
     type: "splash",
     frame: false,
+    icon: iconPath, // ✅ window + taskbar icon
+    resizable: false, // <- disables resizing
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true, // required for contextBridge
@@ -62,6 +67,19 @@ app.on("window-all-closed", () => {
 // *************
 ipcMain.on("project-selected", (event, arg) => {
   console.log("project-selected", arg);
+  if (splash) {
+    splash.close();
+    createWindow();
+  }
+});
+
+ipcMain.on("exit", (event, arg) => {
+  console.log("exit");
+  app.quit();
+});
+
+ipcMain.on("new-project", (event, arg) => {
+  console.log("new-project");
   if (splash) {
     splash.close();
     createWindow();

@@ -1,38 +1,35 @@
 import { initApp } from "./app";
+import { contentLayout } from "./initiallayout";
 
-let config = {
-  content: [
-    {
-      type: "row",
-      content: [
-        {
-          type: "component",
-          componentName: "testComponent",
-          componentState: { label: "A" },
-        },
-        {
-          type: "column",
-          content: [
-            {
-              type: "component",
-              componentName: "testComponent",
-              componentState: { label: "B" },
-            },
-            {
-              type: "component",
-              componentName: "testComponent",
-              componentState: { label: "C" },
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
 declare var GoldenLayout: any;
-var myLayout = new GoldenLayout(config);
+var myLayout = new GoldenLayout(contentLayout);
 
 myLayout.registerComponent("testComponent", function (container: any, componentState: any) {
+  container.getElement().html("<h2>" + componentState.label + "</h2>");
+});
+myLayout.registerComponent("Project Tree", function (container: any, componentState: any) {
+  container.getElement().html("<h2>" + componentState.label + "</h2>");
+});
+myLayout.registerComponent("Project Inspector", function (container: any, componentState: any) {
+  container.getElement().html("<h2>" + componentState.label + "</h2>");
+});
+myLayout.registerComponent("Scene Inspector", function (container: any, componentState: any) {
+  container.getElement().html("<h2>" + componentState.label + "</h2>");
+});
+myLayout.registerComponent("Scene Viewer", function (container: any, componentState: any) {
+  container.getElement().html("<h2>" + componentState.label + "</h2>");
+});
+myLayout.registerComponent("Script Editor", function (container: any, componentState: any) {
+  container.getElement().html("<h2>" + componentState.label + "</h2>");
+});
+
+myLayout.registerComponent("Level Editor", function (container: any, componentState: any) {
+  container.getElement().html("<h2>" + componentState.label + "</h2>");
+});
+myLayout.registerComponent("Asset Manager", function (container: any, componentState: any) {
+  container.getElement().html("<h2>" + componentState.label + "</h2>");
+});
+myLayout.registerComponent("Graphics Manager", function (container: any, componentState: any) {
   container.getElement().html("<h2>" + componentState.label + "</h2>");
 });
 

@@ -11,23 +11,91 @@
     <meta charset="UTF-8" />
     <title>Project Selection</title>
     <style>
+      @font-face {
+        font-family: "ExcaliburFont";
+        src: url("/font/Exfont.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
       body {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
         background-color: #222;
+        color: whitesmoke;
       }
+      .exFont {
+        text-align: center;
+        font-family: "ExcaliburFont";
+        font-size: 32px;
+        color: whitesmoke;
+        font-weight: bold;
+      }
+
+      .bigText {
+        font-size: 40px;
+      }
+      .smallText {
+        font-size: 12px;
+      }
+
       button {
+        width: 125px;
+        height: 35px;
+        background-color: #7cbaeb;
+        border: none;
+        border-radius: 5px;
+        color: #222;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 4px rgba(96, 192, 227, 0.672);
+      }
+      button:hover {
+        background-color: #f2f2f2;
+        border: 1px solid #7cbaeb;
+      }
+      .vert-flex {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .smallGap {
+        gap: 4px;
+      }
+
+      .medGap {
+        gap: 10px;
+      }
+
+      .flex-cent {
+        justify-content: center;
+        align-items: center;
+      }
+
+      .versionText {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        bottom: 3px;
+        left: 3px;
+        font-size: 12px;
+        color: whitesmoke;
+        font-family: "ExcaliburFont";
       }
     </style>
   </head>
   <body>
     <!-- splash.html -->
-    <button id="open-project">Open Project</button>
+    <img src="./graphics/ex.png" alt="ExcaliburJS" width="100%" />
+    <div class="vert-flex flex-cent medGap">
+      <div class="vert-flex flex-cent smallGap">
+        <span class="exFont bigText">Camelot</span>
+        <span class="exFont smallText">ExcaliburJS Editor</span>
+      </div>
+      <button id="new-project">New Project</button>
+      <button id="open-project">Open Project</button>
+      <button id="exit">Exit</button>
+    </div>
+    <span class="versionText">Version 0.0.1</span>
     <script type="module" src="./splash.ts"></script>
   </body>
 </html>
