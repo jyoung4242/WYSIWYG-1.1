@@ -27,6 +27,7 @@ async function createWindow() {
     // Production: load built Vite index.html
     await mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
   }
+  // mainWindow.webContents.openDevTools(); // for debugging
 }
 
 async function createSplash() {

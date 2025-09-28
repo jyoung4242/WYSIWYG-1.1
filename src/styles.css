@@ -1,0 +1,174 @@
+#projectTreeRoot .project-tree {
+  background: #2d2d2d;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#projectTreeRoot .tree-node {
+  user-select: none;
+  margin: 2px 0;
+}
+
+#projectTreeRoot .node-header {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+#projectTreeRoot .node-header:hover {
+  background: #3a3a3a;
+}
+
+#projectTreeRoot .node-header.active {
+  background: #404040;
+}
+
+#projectTreeRoot .caret {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+#projectTreeRoot .caret::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 6px solid #888;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#projectTreeRoot .caret.expanded::before {
+  transform: rotate(90deg);
+  border-left-color: #fff;
+}
+
+#projectTreeRoot .caret.no-children {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#projectTreeRoot .node-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #e0e0e0;
+}
+
+#projectTreeRoot .project-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4fc3f7;
+}
+
+#projectTreeRoot .node-children {
+  margin-left: 20px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 0;
+  opacity: 0;
+}
+
+#projectTreeRoot .node-children.expanded {
+  max-height: 1000px;
+  opacity: 1;
+}
+
+#projectTreeRoot .child-item {
+  padding: 6px 12px;
+  margin: 1px 0;
+  border-radius: 3px;
+  font-size: 13px;
+  color: #b0b0b0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 2px solid transparent;
+}
+
+#projectTreeRoot .child-item:hover {
+  background: #353535;
+  color: #e0e0e0;
+  border-left-color: #4fc3f7;
+}
+
+#projectTreeRoot .connecting-line {
+  position: absolute;
+  left: 8px;
+  top: 24px;
+  width: 1px;
+  background: #444;
+  transition: opacity 0.3s ease;
+}
+
+#projectTreeRoot .tree-node:last-child .connecting-line {
+  display: none;
+}
+
+/* Icons for different node types */
+#projectTreeRoot .node-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  display: inline-block;
+  opacity: 0.8;
+}
+
+#projectTreeRoot .Scenes-icon::before {
+  content: "🎬";
+}
+#projectTreeRoot .Actors-icon::before {
+  content: "👤";
+}
+#projectTreeRoot .Screen-Elements-icon::before {
+  content: "📱";
+}
+#projectTreeRoot .Levels-icon::before {
+  content: "🏗️";
+}
+#projectTreeRoot .Camera-icon::before {
+  content: "📷";
+}
+#projectTreeRoot .Post-Processors-icon::before {
+  content: "⚡";
+}
+#projectTreeRoot .Particles-icon::before {
+  content: "✨";
+}
+
+/* Staggered animation for children */
+#projectTreeRoot .child-item {
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#projectTreeRoot .node-children.expanded .child-item {
+  transform: translateY(0);
+}
+
+#projectTreeRoot .node-children.expanded .child-item:nth-child(1) {
+  transition-delay: 0.05s;
+}
+#projectTreeRoot .node-children.expanded .child-item:nth-child(2) {
+  transition-delay: 0.1s;
+}
+#projectTreeRoot .node-children.expanded .child-item:nth-child(3) {
+  transition-delay: 0.15s;
+}
+#projectTreeRoot .node-children.expanded .child-item:nth-child(4) {
+  transition-delay: 0.2s;
+}
+#projectTreeRoot .node-children.expanded .child-item:nth-child(5) {
+  transition-delay: 0.25s;
+}
