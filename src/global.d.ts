@@ -1,3 +1,5 @@
+import { UUID } from "../electron/UUID";
+
 // src/global.d.ts
 interface Window {
   GoldenLayout: any;
@@ -12,5 +14,6 @@ interface Window {
     getProjectTreeData: () => Promise<any>;
     selectProjectDirectory: () => Promise<string>;
     createNewProjectFile: () => Promise<string>;
+    getDataByID: (id: UUID) => any;
   };
 }

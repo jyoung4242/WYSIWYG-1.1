@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
-import { ProjectData } from "./projectState";
+import { ProjectData } from "./types";
+import { UUID } from "./UUID";
 
 contextBridge.exposeInMainWorld("api", {
   ping: () => "pong",
@@ -12,4 +13,5 @@ contextBridge.exposeInMainWorld("api", {
   getProjectTreeData: () => ipcRenderer.invoke("project:getProjectTreeData"),
   selectProjectDirectory: () => ipcRenderer.invoke("project:openDirectory"),
   createNewProjectFile: () => ipcRenderer.invoke("project:newFile"),
+  getDataByID: (id: UUID) => ipcRenderer.invoke("project:getDataByID", id),
 });
