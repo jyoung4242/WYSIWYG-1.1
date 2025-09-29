@@ -68,9 +68,15 @@ app.on("window-all-closed", () => {
 // *************
 ipcMain.on("project-selected", (event, arg) => {
   //load the project
+  let dir = path.dirname(arg);
+  let fname = path.basename(arg);
+  console.log("dir", dir, "fname", fname);
 
   if (splash) {
     splash.close();
+    ProjectState.setProjectRoot(dir);
+    ProjectState.setProjectFileName(fname);
+    ProjectState.load();
     createWindow();
   }
 });
