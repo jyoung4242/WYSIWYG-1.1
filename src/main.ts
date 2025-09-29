@@ -21,11 +21,17 @@ myLayout.registerComponent("Project Tree", function (container: any, componentSt
   const tree = new ProjectTree({
     container: treeContainer,
     projectName: componentState.projectName,
-    onOpenElement: (node: TreeNode) => {
-      console.log("Open in inspector:", node);
+    onOpenElement: (node: HTMLElement) => {
+      window.alert("Opening: " + node.innerText);
       // Dispatch custom event for your inspector panel
       const event = new CustomEvent("openElementInInspector", { detail: node });
       document.dispatchEvent(event);
+    },
+    onCreateNew: (parentNode: TreeNode, parentElement: HTMLElement) => {
+      window.alert("Creating new element under: " + parentNode.title);
+    },
+    onDeleteElement: (node: TreeNode, element: HTMLElement) => {
+      window.alert("Deleting element: " + node.title);
     },
   });
 });

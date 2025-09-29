@@ -1,7 +1,7 @@
-import { log } from "console";
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, dialog } from "electron";
 import path from "path";
 import dotenv from "dotenv";
+import { ProjectState } from "./projectState";
 
 dotenv.config();
 
@@ -67,7 +67,8 @@ app.on("window-all-closed", () => {
 // IPC
 // *************
 ipcMain.on("project-selected", (event, arg) => {
-  console.log("project-selected", arg);
+  //load the project
+
   if (splash) {
     splash.close();
     createWindow();
@@ -75,14 +76,70 @@ ipcMain.on("project-selected", (event, arg) => {
 });
 
 ipcMain.on("exit", (event, arg) => {
-  console.log("exit");
   app.quit();
 });
 
 ipcMain.on("new-project", (event, arg) => {
-  console.log("new-project");
+  console.log("new project path", arg);
+  //arg is a path to a file, split
+  let dir = path.dirname(arg);
+  let fname = path.basename(arg);
+  console.log("dir", dir, "fname", fname);
+
   if (splash) {
     splash.close();
+    ProjectState.setProjectRoot(dir);
+    ProjectState.setProjectFileName(fname);
+    ProjectState.setupNewProjectDefaults();
+    ProjectState.save();
+
     createWindow();
   }
+});
+
+ipcMain.handle("project:get", async () => {
+  return ProjectState.data;
+});
+
+ipcMain.handle("project:update", async (_event, partial) => {
+  await ProjectState.update(partial);
+  return ProjectState.data;
+});
+
+ipcMain.handle("project:load", async () => {
+  await ProjectState.load();
+  return ProjectState.data;
+});
+
+ipcMain.handle("project:getProjectTreeData", async () => {
+  return ProjectState.getProjectTreeData();
+});
+
+ipcMain.handle("project:openDirectory", async () => {
+  const result = await dialog.showOpenDialog({
+    title: "Select an Excalibur Project File",
+    properties: ["openFile"], // ✅ single file, not a folder
+    filters: [
+      { name: "Excalibur Project", extensions: ["exProj"] }, // ✅ only .exProj
+      { name: "All Files", extensions: ["*"] }, // optional fallback
+    ],
+  });
+
+  if (result.canceled || result.filePaths.length === 0) return null;
+  return result.filePaths[0]; // full path to the .exProj file
+});
+
+ipcMain.handle("project:newFile", async () => {
+  const result = await dialog.showSaveDialog({
+    title: "Create New Project",
+    defaultPath: "MyProject.exProj", // suggested default name
+    filters: [{ name: "Excalibur Project", extensions: ["exProj"] }],
+  });
+
+  console.log("main - result", result);
+
+  if (result.canceled || !result.filePath) return null;
+  console.log("main 2 - result.filePath", result.filePath);
+
+  return result.filePath; // full path the user entered, e.g. /chosen/dir/Game.exProj
 });

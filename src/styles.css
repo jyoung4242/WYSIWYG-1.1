@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "ExcaliburFont";
+  src: url("/font/Exfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "ExcaliburFont";
+  color: whitesmoke;
+}
+
 #projectTreeRoot .project-tree {
   background: #2d2d2d;
   border-radius: 8px;
@@ -134,6 +146,13 @@
 #projectTreeRoot .Screen-Elements-icon::before {
   content: "📱";
 }
+#projectTreeRoot .Components-icon::before {
+  content: "🧩";
+}
+#projectTreeRoot .Systems-icon::before {
+  content: "🖧";
+}
+
 #projectTreeRoot .Levels-icon::before {
   content: "🏗️";
 }
