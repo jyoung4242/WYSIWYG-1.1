@@ -29,6 +29,7 @@ export const contentLayout = {
           width: 82,
           content: [
             {
+              id: "mainStack",
               type: "stack", // viewer, scripts, and level editor
               height: 80,
               content: [
@@ -66,6 +67,13 @@ export const contentLayout = {
                   componentName: "Level Editor",
                   componentState: {
                     label: "Level Editor",
+                  },
+                },
+                {
+                  type: "component",
+                  componentName: "TileMap Editor",
+                  componentState: {
+                    label: "TileMap Editor",
                   },
                 },
               ],

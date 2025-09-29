@@ -62,7 +62,6 @@ export class ProjectTree {
 
     // load children of project
     let childNodes = node.children;
-    console.log(childNodes);
 
     if (childNodes) {
       childNodes.forEach(child => {

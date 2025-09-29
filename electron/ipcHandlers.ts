@@ -27,7 +27,6 @@ export function registerIpcHandlers(context: IpcHandlerContext) {
   });
 
   ipcMain.on("new-project", (event, arg) => {
-    console.log("new project path", arg);
     const dir = path.dirname(arg);
     const fname = path.basename(arg);
     closeSplash();

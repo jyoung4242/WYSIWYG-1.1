@@ -21,4 +21,11 @@ export enum DataType {
   PARTICLE = "PARTICLE",
   SCREENELEMENT = "SCREENELEMENT",
   PROJECT = "PROJECT",
+  TIMER = "TIMER",
+  SCRIPT = "SCRIPT",
+}
+
+export enum BuildStyles {
+  Minified = "Minified",
+  Expanded = "Expanded",
 }

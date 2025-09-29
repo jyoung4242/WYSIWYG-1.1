@@ -48,11 +48,13 @@ export class ProjectTree {
         { id: "camera", type: "section", title: "Camera", children: [] },
         { id: "post-processors", type: "section", title: "Post-Processors", children: [] },
         { id: "particles", type: "section", title: "Particles", children: [] },
+        { id: "timers", type: "section", title: "Timers", children: [] },
       ],
     };
+    //@ts-ignore
     if (window.api)
+      //@ts-ignore
       window.api.getProjectTreeData().then(data => {
-        console.log("data", data);
         this.projectTree = data;
         this.renderTree();
         this.setupEvents();

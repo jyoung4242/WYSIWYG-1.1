@@ -13,7 +13,9 @@ import {
   ProjectData,
   SceneData,
   ScreenElementData,
+  ScriptData,
   SystemData,
+  TimerData,
 } from "./types";
 
 import { UUID } from "./UUID";
@@ -34,6 +36,8 @@ export class ProjectState {
     postProcessors: [] as PostProcessorData[],
     particles: [] as ParticleData[],
     engineConfig: {} as EngineData,
+    scripts: [] as ScriptData[],
+    timers: [] as TimerData[],
   };
 
   private static _projectRoot: string | null = null;
@@ -85,6 +89,8 @@ export class ProjectState {
       systems: [],
       postProcessors: [],
       particles: [],
+      timers: [],
+      scripts: [],
       engineConfig: {
         size: { width: 800, height: 600 },
         backgroundColor: ExcaliburBlue,
@@ -149,6 +155,10 @@ export class ProjectState {
       return { id: camera.id, type: "element", title: this._capitalizeFirst(camera.name) };
     });
 
+    const timerArray: Array<any> = this.data.timers.map(timer => {
+      return { id: timer.id, type: "element", title: this._capitalizeFirst(timer.name) };
+    });
+
     return {
       id: this._data.name,
       type: "project",
@@ -163,21 +173,15 @@ export class ProjectState {
         { id: "camera", type: "section", title: "Camera", children: [...cameraArray] },
         { id: "post-processors", type: "section", title: "Post-Processors", children: [...postProcessorArray] },
         { id: "particles", type: "section", title: "Particles", children: [...particleArray] },
+        { id: "timers", type: "section", title: "Timers", children: [...timerArray] },
       ],
     };
   }
 
   static async save(): Promise<void> {
     // Ensure parent directory exists
-
-    console.log("savePath :", this.savePath);
-    console.log("dirname  :", path.dirname(this.savePath));
-
     await fs.mkdir(path.dirname(this.savePath), { recursive: true });
-
     // Now write (creates or overwrites the file)
-    console.log("Saving state to", this.savePath);
-
     await fs.writeFile(this.savePath, JSON.stringify(this._data, null, 2));
   }
 

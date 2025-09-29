@@ -16,7 +16,7 @@ async function createWindow() {
     },
   });
   await mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 }
 
 async function createSplash() {

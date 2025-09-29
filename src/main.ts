@@ -1,8 +1,15 @@
 import { ProjectTree, TreeNode } from "./content/projectTree";
+import { addHeaderControls } from "./content/RunHeaderControls";
 import { contentLayout } from "./initiallayout";
 
 declare var GoldenLayout: any;
 var myLayout = new GoldenLayout(contentLayout);
+
+myLayout.on("stackCreated", function (stack: any) {
+  console.log("stackCreated", stack);
+  if (stack.config.id != "mainStack") return;
+  addHeaderControls(stack);
+});
 
 myLayout.registerComponent("testComponent", function (container: any, componentState: any) {
   container.getElement().html("<h2>" + componentState.label + "</h2>");
@@ -51,6 +58,8 @@ myLayout.registerComponent("Project Inspector", function (container: any, compon
     let data = await window.api?.getDataByID(detail.nodeId);
     console.log("retrieved data", data);
 
+    //TODO left off here
+
     /* switch (detail.nodeType) {
       case "Scene":
         //@ts-ignore
@@ -71,8 +80,6 @@ myLayout.registerComponent("Project Inspector", function (container: any, compon
 
   // Listen for selections
   document.addEventListener("inspector:select", (e: Event) => {
-    console.log("inspector:select", e);
-
     const custom = e as CustomEvent;
     renderInspector(custom.detail);
   });
@@ -94,6 +101,10 @@ myLayout.registerComponent("Level Editor", function (container: any, componentSt
   container.getElement().html("<h2>" + componentState.label + "</h2>");
 });
 
+myLayout.registerComponent("TileMap Editor", function (container: any, componentState: any) {
+  container.getElement().html("<h2>" + componentState.label + "</h2>");
+});
+
 myLayout.registerComponent("Asset Manager", function (container: any, componentState: any) {
   container.getElement().html("<h2>" + componentState.label + "</h2>");
 });
@@ -108,12 +119,9 @@ myLayout.init();
 document.addEventListener("DOMContentLoaded", () => {});
 
 document.addEventListener("click", e => {
-  console.log("click", e);
-
   const target = e.target as HTMLElement;
 
   if (!target.classList.contains("node-title")) return;
-  console.log("click", target);
 
   const node = target.parentElement as HTMLElement;
 
@@ -122,15 +130,12 @@ document.addEventListener("click", e => {
     node.classList.toggle("expanded");
   }
 
-  console.log(node.classList.contains("leaf-node"));
-
   // Leaf node click → trigger opening in project inspector
   if (node.classList.contains("leaf-node")) {
     const nodeId = node.dataset.id;
     const nodeTitle = target.textContent;
     const nodeType = node.dataset.type;
     // Trigger event to open element in inspector
-    console.log("sending inspector:select", { nodeId, nodeTitle, nodeType });
 
     const event = new CustomEvent("inspector:select", { detail: { nodeId, nodeTitle, nodeType } });
     document.dispatchEvent(event);

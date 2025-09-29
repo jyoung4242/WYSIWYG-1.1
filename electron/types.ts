@@ -72,6 +72,28 @@ export type ScreenElementData = {
   name: string;
 };
 
+export type TimerData = {
+  type: DataType.TIMER;
+  id: UUID;
+  name: string;
+  interval: number;
+  repeat: boolean;
+  script: UUID;
+};
+
+export type ScriptData = {
+  type: DataType.SCRIPT;
+  id: UUID;
+  name: string;
+  scriptType: keyof Omit<DataType, "SCRIPT">;
+};
+
+export type Script = {
+  id: UUID;
+  code: string; //<-- the code of the script
+  //params: Record<string, any>;
+};
+
 export type ProjectData = {
   type: DataType.PROJECT;
   name: string;
@@ -86,4 +108,6 @@ export type ProjectData = {
   postProcessors: PostProcessorData[];
   particles: ParticleData[];
   engineConfig: EngineData;
+  scripts: any[];
+  timers: TimerData[];
 };
