@@ -81,7 +81,9 @@ export function registerIpcHandlers(context: IpcHandlerContext) {
   });
 
   ipcMain.handle("project:getDataByID", async (_event, id: UUID) => {
-    return ProjectState.findById(id);
+    if (id == "Project") {
+      return ProjectState.getEngineData();
+    } else return ProjectState.findById(id);
   });
 }
 

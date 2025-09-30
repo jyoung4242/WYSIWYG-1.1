@@ -1,5 +1,3 @@
-import { ipcRenderer } from "electron";
-
 // ProjectTree.ts
 export interface TreeNode {
   id: string;

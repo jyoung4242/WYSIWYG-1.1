@@ -1,3 +1,5 @@
+import { DataType } from "../electron/enums";
+import { renderProjectForm, renderSceneForm } from "./content/projectInspector";
 import { ProjectTree, TreeNode } from "./content/projectTree";
 import { addHeaderControls } from "./content/RunHeaderControls";
 import { contentLayout } from "./initiallayout";
@@ -30,8 +32,14 @@ myLayout.registerComponent("Project Tree", function (container: any, componentSt
       const nodeTitle = node.innerText;
       const nodeId = node.getAttribute("data-node-id");
       const nodeType = parent!.innerText;
+      console.log("nodeId", nodeId, "nodeTitle", nodeTitle, "nodeType", nodeType);
+      let event;
+      if (nodeId == null && nodeTitle == "Project") {
+        event = new CustomEvent("inspector:select", { detail: { nodeId: "Project" } });
+      } else {
+        event = new CustomEvent("inspector:select", { detail: { nodeId } });
+      }
 
-      const event = new CustomEvent("inspector:select", { detail: { nodeId } });
       document.dispatchEvent(event);
     },
     onCreateNew: (parentNode: TreeNode, parentElement: HTMLElement) => {
@@ -45,6 +53,7 @@ myLayout.registerComponent("Project Tree", function (container: any, componentSt
 
 myLayout.registerComponent("Project Inspector", function (container: any, componentState: any) {
   const root = document.createElement("div");
+  root.id = "inspector-panel";
   root.className = "inspector-panel";
   root.textContent = "Select an item from the Project Tree";
   container.getElement().append(root);
@@ -56,26 +65,51 @@ myLayout.registerComponent("Project Inspector", function (container: any, compon
     // call an IPC handler to get data of element id
     //@ts-ignore
     let data = await window.api?.getDataByID(detail.nodeId);
-    console.log("retrieved data", data);
+    console.log("data", data);
 
-    //TODO left off here
+    let type: DataType = data.type;
 
-    /* switch (detail.nodeType) {
-      case "Scene":
-        //@ts-ignore
-        renderSceneForm(root, detail.data);
+    console.log("retrieved type", type);
+
+    switch (type) {
+      case DataType.PROJECT:
+        console.log("Project data", data);
+        renderProjectForm(root);
         break;
-      case "Actor":
-        //@ts-ignore
-        renderActorForm(root, detail.data);
+      case DataType.SCENE:
+        renderSceneForm(root, data);
         break;
-      case "Camera":
-        //@ts-ignore
-        renderCameraForm(root, detail.data);
+      case DataType.ACTOR:
+        root.innerHTML = `<h2>${data.name}</h2>`;
         break;
-      default:
-        root.textContent = "No form for this type yet.";
-    } */
+      case DataType.LEVEL:
+        root.innerHTML = `<h2>${data.name}</h2>`;
+        break;
+      case DataType.CAMERA:
+        root.innerHTML = `<h2>${data.name}</h2>`;
+        break;
+      case DataType.COMPONENT:
+        root.innerHTML = `<h2>${data.name}</h2>`;
+        break;
+      case DataType.SYSTEM:
+        root.innerHTML = `<h2>${data.name}</h2>`;
+        break;
+      case DataType.POSTPROCESSOR:
+        root.innerHTML = `<h2>${data.name}</h2>`;
+        break;
+      case DataType.PARTICLE:
+        root.innerHTML = `<h2>${data.name}</h2>`;
+        break;
+      case DataType.SCREENELEMENT:
+        root.innerHTML = `<h2>${data.name}</h2>`;
+        break;
+      case DataType.TIMER:
+        root.innerHTML = `<h2>${data.name}</h2>`;
+        break;
+      case DataType.SCRIPT:
+        root.innerHTML = `<h2>${data.name}</h2>`;
+        break;
+    }
   }
 
   // Listen for selections
@@ -128,16 +162,5 @@ document.addEventListener("click", e => {
   // Toggle collapse for section nodes
   if (node.classList.contains("section-node")) {
     node.classList.toggle("expanded");
-  }
-
-  // Leaf node click → trigger opening in project inspector
-  if (node.classList.contains("leaf-node")) {
-    const nodeId = node.dataset.id;
-    const nodeTitle = target.textContent;
-    const nodeType = node.dataset.type;
-    // Trigger event to open element in inspector
-
-    const event = new CustomEvent("inspector:select", { detail: { nodeId, nodeTitle, nodeType } });
-    document.dispatchEvent(event);
   }
 });

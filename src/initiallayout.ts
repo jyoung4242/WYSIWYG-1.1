@@ -6,7 +6,7 @@ export const contentLayout = {
         {
           // Project column
           type: "column",
-          width: 18,
+          width: 25,
           content: [
             {
               type: "component",
@@ -26,7 +26,7 @@ export const contentLayout = {
         {
           // Editor column Viewer and Asset Manager
           type: "column",
-          width: 82,
+          width: 75,
           content: [
             {
               id: "mainStack",

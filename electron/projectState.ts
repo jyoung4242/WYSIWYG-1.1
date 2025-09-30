@@ -196,6 +196,10 @@ export class ProjectState {
     await this.save();
   }
 
+  static getEngineData() {
+    return Object.assign({ type: DataType.PROJECT }, this._data.engineConfig);
+  }
+
   static findById(
     id: UUID
   ):
@@ -208,6 +212,9 @@ export class ProjectState {
     | SystemData
     | PostProcessorData
     | ParticleData
+    | TimerData
+    | ScriptData
+    | EngineData
     | undefined {
     // Search through all collections
     const collections = [
