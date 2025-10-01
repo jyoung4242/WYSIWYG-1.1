@@ -1,5 +1,5 @@
 import { DataType } from "../electron/enums";
-import { renderProjectForm, renderSceneForm } from "./content/projectInspector";
+import { renderActorForm, renderComponentForm, renderProjectForm, renderSceneForm } from "./content/projectInspector";
 import { ProjectTree, TreeNode } from "./content/projectTree";
 import { addHeaderControls } from "./content/RunHeaderControls";
 import { contentLayout } from "./initiallayout";
@@ -80,7 +80,7 @@ myLayout.registerComponent("Project Inspector", function (container: any, compon
         renderSceneForm(root, data);
         break;
       case DataType.ACTOR:
-        root.innerHTML = `<h2>${data.name}</h2>`;
+        renderActorForm(root, data);
         break;
       case DataType.LEVEL:
         root.innerHTML = `<h2>${data.name}</h2>`;
@@ -89,7 +89,7 @@ myLayout.registerComponent("Project Inspector", function (container: any, compon
         root.innerHTML = `<h2>${data.name}</h2>`;
         break;
       case DataType.COMPONENT:
-        root.innerHTML = `<h2>${data.name}</h2>`;
+        renderComponentForm(root, data);
         break;
       case DataType.SYSTEM:
         root.innerHTML = `<h2>${data.name}</h2>`;

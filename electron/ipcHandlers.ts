@@ -85,6 +85,14 @@ export function registerIpcHandlers(context: IpcHandlerContext) {
       return ProjectState.getEngineData();
     } else return ProjectState.findById(id);
   });
+
+  ipcMain.handle("project:getActorComponentsByID", async (_event, id: UUID) => {
+    return ProjectState.getActorComponentsByID(id);
+  });
+
+  ipcMain.handle("project:getCustomComponents", async () => {
+    return ProjectState.getCustomComponents();
+  });
 }
 
 // Optional: cleanup function to remove all handlers
@@ -99,4 +107,5 @@ export function unregisterIpcHandlers() {
   ipcMain.removeHandler("project:openDirectory");
   ipcMain.removeHandler("project:newFile");
   ipcMain.removeHandler("project:getDataByID");
+  ipcMain.removeHandler("project:getComponentsByID");
 }

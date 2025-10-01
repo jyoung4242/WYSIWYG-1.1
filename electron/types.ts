@@ -1,7 +1,8 @@
 import { DataType, DisplayMode } from "./enums";
 import { UUID } from "./UUID";
 
-export const ExcaliburBlue = "#7cbaeb";
+export type ComponentPropertyType = "string" | "number" | "boolean" | "object" | "array" | "vector" | "color";
+export type NestedComponentPropertyType = { type: ComponentPropertyType } | { type: "object"; nested: NestedComponentPropertyType };
 
 type CanvasSize = {
   width: number;
@@ -28,6 +29,7 @@ export type ActorData = {
   type: DataType.ACTOR;
   id: UUID;
   name: string;
+  components: UUID[];
 };
 
 export type LevelData = {
@@ -58,6 +60,7 @@ export type ComponentData = {
   type: DataType.COMPONENT;
   id: UUID;
   name: string;
+  properties: Record<string, NestedComponentPropertyType>;
 };
 
 export type SystemData = {
@@ -110,4 +113,9 @@ export type ProjectData = {
   engineConfig: EngineData;
   scripts: any[];
   timers: TimerData[];
+};
+
+export type Vector = {
+  x: number;
+  y: number;
 };

@@ -39,13 +39,13 @@ export const contentLayout = {
                   content: [
                     {
                       type: "component",
-                      width: 80,
+                      width: 75,
                       componentName: "Scene Viewer",
                       title: "Scene",
                       componentState: { label: "Scene Viewer" },
                     },
                     {
-                      width: 20,
+                      width: 25,
                       type: "component",
                       componentName: "Scene Inspector",
                       title: "Inspector",

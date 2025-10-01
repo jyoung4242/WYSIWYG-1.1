@@ -5,8 +5,15 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "standard";
+  src: url("/font/Inter.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
-  font-family: "ExcaliburFont";
+  font-family: "standard";
   color: whitesmoke;
 }
 
@@ -267,7 +274,7 @@ body {
   margin: 0 auto;
   display: grid;
   gap: 16px;
-  font-family: "ExcaliburFont";
+  font-family: "standard";
   color: whitesmoke;
 }
 
@@ -339,7 +346,7 @@ body {
   margin: 0 auto;
   display: grid;
   gap: 16px;
-  font-family: "ExcaliburFont";
+  font-family: "standard";
 }
 
 .scene-title {

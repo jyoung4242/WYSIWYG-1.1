@@ -6,7 +6,6 @@ import {
   CameraData,
   ComponentData,
   EngineData,
-  ExcaliburBlue,
   LevelData,
   ParticleData,
   PostProcessorData,
@@ -17,6 +16,7 @@ import {
   SystemData,
   TimerData,
 } from "./types";
+import { ExcaliburBlue } from "./constants";
 
 import { UUID } from "./UUID";
 import { DataType, DisplayMode } from "./enums";
@@ -74,6 +74,7 @@ export class ProjectState {
           type: DataType.ACTOR,
           id: UUID.generateUUID(),
           name: "DefaultActor",
+          components: [],
         },
       ],
       screenElements: [],
@@ -198,6 +199,17 @@ export class ProjectState {
 
   static getEngineData() {
     return Object.assign({ type: DataType.PROJECT }, this._data.engineConfig);
+  }
+
+  static getCustomComponents() {
+    return this._data.components;
+  }
+
+  static getActorComponentsByID(id: UUID) {
+    let selectedActor: ActorData = this._data.actors.find(actor => actor.id === id)!;
+    console.log("in project state: selectedActor", selectedActor, id);
+
+    return selectedActor.components;
   }
 
   static findById(

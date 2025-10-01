@@ -14,4 +14,6 @@ contextBridge.exposeInMainWorld("api", {
   selectProjectDirectory: () => ipcRenderer.invoke("project:openDirectory"),
   createNewProjectFile: () => ipcRenderer.invoke("project:newFile"),
   getDataByID: (id: UUID) => ipcRenderer.invoke("project:getDataByID", id),
+  getActorComponentsByID: (id: UUID) => ipcRenderer.invoke("project:getActorComponentsByID", id),
+  getCustomComponents: () => ipcRenderer.invoke("project:getCustomComponents"),
 });
